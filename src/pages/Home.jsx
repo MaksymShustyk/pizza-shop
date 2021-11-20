@@ -86,7 +86,7 @@ function Home() {
                         onClickAddPizza={hendleAddPizzaToCart}
                         key={obj.id}
                         isLoading={true}
-                        addedCount = {cartItems[obj.id] && cartItems[obj.id].length}
+                        addedCount = {cartItems[obj.id] && cartItems[obj.id].items.length}
                         {...obj} />
                     ) : Array(10).fill(0).map((_, index)=> <PizzasLoadingBlock key={index}/>)
                 }
