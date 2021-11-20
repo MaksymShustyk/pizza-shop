@@ -1,11 +1,45 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-import { Button } from '../components';
-
+import { Button, Cartitem } from '../components';
+import {clearCart, removeCartItem, plusCartItem, minusCartItem} from '../redux/actions/cart'
+import cartEmptyImg from '../assets/img/shopping-cart-colour 1.png'
 
 function Cart() {
+    const dispatch = useDispatch();
+    const {items, totalPrice, totalCount} = useSelector(({cart})=> cart)
+
+    const addedPizzas = Object.keys(items).map(key=>{
+        return items[key].items[0]
+
+    })
+
+    const onClearCart = () => {
+        if(window.confirm('Вы действительно хотите удалить пиццы с корзины?')){
+            dispatch(clearCart())
+        }
+
+    }
+
+    const onRemoveItem = (id) => {
+        if(window.confirm('Вы действительно хотите удалить?')){
+            dispatch(removeCartItem(id))
+        }
+
+    }
+
+    const onPlusItem = (id) => {
+        dispatch(plusCartItem(id));
+    };
+
+    const onMinusItem = (id) => {
+        dispatch(minusCartItem(id));
+    };
+
     return (
         <div className="conteiner conteiner-cart">
+        {
+            totalCount ?
                 <div className="cart">
                         <div className="cart-top">
                             <h1 className="cart-title">
@@ -26,126 +60,38 @@ function Cart() {
                                     <path d="M11.6666 9.16667V14.1667" stroke="#B6B6B6" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"></path>
                                     </svg>
 
-                                <span>Очистить корзину</span>
+                                <span onClick={onClearCart}>Очистить корзину</span>
                             </div>
 
                         </div>
                         <div className="content-item">
-                            <div className="cart-item">
-                                <div className="cart-item_img">
-                                    <img src="https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg" alt="Hot pizza img" className="pizza-block_img"/>
-                                </div>
-                                <div className="cart-item_info">
-                                    <h3>Чизбургер-пицца</h3>
-                                    <p>тонкое тесто, 26 см.</p>
-                                </div>
-                                <div className="cart-item_count">
-                                    <div className="btn count-btn circle-btn">
-                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"></path>
-                                            </svg>
-                                    </div>
-                                    <b>2</b>
-                                    <div className="btn count-btn circle-btn">
-                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z" ></path>
-                                            <path d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z" ></path>
-                                            </svg>
-                                    </div>
-                                </div>
-                                <div className="cart-item_price"><b>120 ₴</b></div>
-                                <div className="cart-item_remove">
-                                    <div className="remove-btn btn circle-btn">
-                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z" ></path>
-                                            <path d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"></path>
-                                            </svg>
-                                            <span>
-                                                Удалить пиццу
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="cart-item">
-                                <div className="cart-item_img">
-                                    <img src="https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg" alt="Hot pizza img" className="pizza-block_img"/>
-                                </div>
-                                <div className="cart-item_info">
-                                    <h3>Чизбургер-пицца</h3>
-                                    <p>тонкое тесто, 26 см.</p>
-                                </div>
-                                <div className="cart-item_count">
-                                    <div className="btn count-btn circle-btn">
-                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"></path>
-                                            </svg>
-                                    </div>
-                                    <b>2</b>
-                                    <div className="btn count-btn circle-btn">
-                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z" ></path>
-                                            <path d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z" ></path>
-                                            </svg>
-                                    </div>
-                                </div>
-                                <div className="cart-item_price"><b>120 ₴</b></div>
-                                <div className="cart-item_remove">
-                                    <div className="remove-btn btn circle-btn">
-                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z" ></path>
-                                            <path d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"></path>
-                                            </svg>
-                                            <span>
-                                                Удалить пиццу
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="cart-item">
-                                <div className="cart-item_img">
-                                    <img src="https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg" alt="Hot pizza img" className="pizza-block_img"/>
-                                </div>
-                                <div className="cart-item_info">
-                                    <h3>Чизбургер-пицца</h3>
-                                    <p>тонкое тесто, 26 см.</p>
-                                </div>
-                                <div className="cart-item_count">
-                                    <div className="btn count-btn circle-btn">
-                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"></path>
-                                            </svg>
-                                    </div>
-                                    <b>2</b>
-                                    <div className="btn count-btn circle-btn">
-                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z" ></path>
-                                            <path d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z" ></path>
-                                            </svg>
-                                    </div>
-                                </div>
-                                <div className="cart-item_price"><b>120 ₴</b></div>
-                                <div className="cart-item_remove">
-                                    <div className="remove-btn btn circle-btn">
-                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z" ></path>
-                                            <path d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"></path>
-                                            </svg>
-                                            <span>
-                                                Удалить пиццу
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
+                        {
+                            addedPizzas.map((obj)=>
+                            (<Cartitem
+                            key={obj.id}
+                            id={obj.id}
+                            imageUrl={obj.imageUrl}
+                            name={obj.name}
+                            type={obj.type}
+                            size={obj.size}
+                            totalPrice={items[obj.id].totalPrice}
+                            totalCount={items[obj.id].totalCount}
+                            removeCartItem={onRemoveItem}
+                            onPlus={onPlusItem}
+                            onMinus={onMinusItem}
+                            />)
+                            )
+                        }
                         </div>
                         <div className="cart-bottom">
                             <div className="cart-bottom_deteils">
                                 <span>
                                     Всего пицц:
-                                    <b>3 шт.</b>
+                                    <b>{totalCount} шт.</b>
                                 </span>
                                 <span>
                                     Сумма заказа:
-                                    <b>520 ₴</b>
+                                    <b>{totalPrice} ₴</b>
                                 </span>
                             </div>
                             <div className="cart-bottom_buttons">
@@ -164,6 +110,7 @@ function Cart() {
                         </div>
 
                 </div>
+            :
                     <div className="cart-empty cart">
                         <h2>Корзина пустая
                             <b>😕</b>
@@ -176,6 +123,7 @@ function Cart() {
                         </Link>
                     </div>
         }
+
             </div>
     )
 }
