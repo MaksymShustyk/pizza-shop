@@ -8,17 +8,15 @@ import cartEmptyImg from '../assets/img/shopping-cart-colour 1.png'
 function Cart() {
     const dispatch = useDispatch();
     const {items, totalPrice, totalCount} = useSelector(({cart})=> cart)
-
     const addedPizzas = Object.keys(items).map(key=>{
         return items[key].items[0]
 
-    })
+})
 
     const onClearCart = () => {
         if(window.confirm('Вы действительно хотите удалить пиццы с корзины?')){
             dispatch(clearCart())
         }
-
     }
 
     const onRemoveItem = (id) => {
@@ -66,14 +64,14 @@ function Cart() {
                         </div>
                         <div className="content-item">
                         {
-                            addedPizzas.map((obj)=>
+                            addedPizzas.map(obj=>
                             (<Cartitem
                             key={obj.id}
                             id={obj.id}
                             imageUrl={obj.imageUrl}
                             name={obj.name}
-                            type={obj.type}
-                            size={obj.size}
+                            // type={obj.type}
+                            // size={obj.size}
                             totalPrice={items[obj.id].totalPrice}
                             totalCount={items[obj.id].totalCount}
                             removeCartItem={onRemoveItem}
