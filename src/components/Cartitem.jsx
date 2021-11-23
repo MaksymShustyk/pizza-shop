@@ -1,7 +1,21 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Button } from '.';
+// type, size,
+function Cartitem({id, imageUrl, name,  totalPrice,totalCount, removeCartItem, onPlus, onMinus}) {
+    const {items} = useSelector(({cart})=> cart)
 
-function Cartitem({id, imageUrl, name, type, size, totalPrice,totalCount, removeCartItem, onPlus, onMinus}) {
+    let currentPizzaInfo =[]
+    items[id].items.map(obj=>currentPizzaInfo.push(obj.type+' '+'тесто'+', '+obj.size+' ' +'.см'))
+
+    let countObj = currentPizzaInfo.reduce((acc, val) => (acc[val] = acc[val] ? acc[val] + 1 : 1, acc), {});
+
+    let countArr = Object.keys(countObj).map(key => ''+ key+' '+ countObj[key]+'-'+'шт.');
+
+
+
+
+
     const handleRemoveClick = () => {
         removeCartItem(id);
     }
@@ -19,7 +33,10 @@ function Cartitem({id, imageUrl, name, type, size, totalPrice,totalCount, remove
             </div>
             <div className="cart-item_info">
                 <h3>{name}</h3>
-                <p>{type} тесто, {size} см.</p>
+                {   countArr.map(obj=>
+                    <p>
+                    {obj}</p>
+                )}
             </div>
             <div className="cart-item_count">
                 <Button className="count-btn" onClick={handelMinusItem} circle>
